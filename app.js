@@ -166,9 +166,13 @@ function updatePipelineFromStatus(data) {
         if (i < completedPhases.length - 1) setConnector(i, 'done');
       });
 
-      // Phases 4 & 5 (build + deploy) are manual for now
-      setNodeState('build', 'waiting', 0, 'Ready — use Claude Code');
-      setNodeState('deploy', 'waiting', 0, 'Ready — use Vercel CLI');
+      // Phase 4: Website built
+      if (data.siteHtml) {
+        completedPhases.push('build');
+        showSitePreview(data.siteHtml);
+      }
+
+      setNodeState('deploy', 'waiting', 0, 'Download & deploy manually');
 
       document.getElementById('startBtn').disabled = false;
       document.getElementById('startBtn').textContent = 'BUILD CINEMATIC SITE';
@@ -240,6 +244,35 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     document.getElementById('startBtn').disabled = false;
     document.getElementById('startBtn').textContent = 'RETRY';
   }
+});
+
+// Site preview
+let generatedHtml = '';
+
+function showSitePreview(html) {
+  generatedHtml = html;
+  const preview = document.getElementById('sitePreview');
+  const frame = document.getElementById('previewFrame');
+  preview.style.display = 'block';
+  frame.srcdoc = html;
+  preview.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+document.getElementById('downloadHtmlBtn').addEventListener('click', () => {
+  if (!generatedHtml) return;
+  const blob = new Blob([generatedHtml], { type: 'text/html' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'cinematic-site.html';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+document.getElementById('openPreviewBtn').addEventListener('click', () => {
+  if (!generatedHtml) return;
+  const win = window.open('', '_blank');
+  win.document.write(generatedHtml);
+  win.document.close();
 });
 
 // Enter key

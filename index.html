@@ -389,6 +389,20 @@ body{
       <div style="font-size:.75rem;color:var(--text-sub);margin-bottom:6px">Your site is live</div>
       <a id="liveUrlLink" href="#" target="_blank">https://your-site.vercel.app</a>
     </div>
+
+    <!-- Site Preview -->
+    <div id="sitePreview" style="display:none;margin-top:24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div style="font-family:'Tektur',sans-serif;font-size:1rem;font-weight:700;">Generated Website</div>
+        <div style="display:flex;gap:8px;">
+          <button id="downloadHtmlBtn" style="padding:10px 20px;font-size:.75rem;font-weight:600;background:var(--accent);color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:'Inter',sans-serif;">Download HTML</button>
+          <button id="openPreviewBtn" style="padding:10px 20px;font-size:.75rem;font-weight:600;background:var(--surface-2);color:var(--text-sub);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-family:'Inter',sans-serif;">Open in New Tab</button>
+        </div>
+      </div>
+      <div style="border:1.5px solid var(--border);border-radius:12px;overflow:hidden;background:#fff;">
+        <iframe id="previewFrame" style="width:100%;height:600px;border:none;" sandbox="allow-scripts allow-same-origin"></iframe>
+      </div>
+    </div>
   </div>
 </main>
 
