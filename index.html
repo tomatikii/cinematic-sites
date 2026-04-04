@@ -270,6 +270,30 @@ body{
   text-decoration:none;
 }
 
+/* Language toggle */
+.lang-toggle{
+  display:flex;
+  gap:4px;
+  background:var(--surface);
+  border-radius:8px;
+  padding:3px;
+}
+.lang-btn{
+  flex:1;
+  padding:8px;
+  border:none;
+  background:transparent;
+  font-family:'Inter',sans-serif;
+  font-size:.75rem;
+  font-weight:600;
+  color:var(--text-sub);
+  cursor:pointer;
+  border-radius:6px;
+  transition:all .15s;
+}
+.lang-btn.active{background:var(--accent);color:#fff}
+.lang-btn:hover:not(.active){background:var(--surface-2)}
+
 /* Responsive */
 @media(max-width:768px){
   .main{grid-template-columns:1fr}
@@ -295,6 +319,14 @@ body{
     <div class="input-group">
       <label class="input-label">Brand Notes (optional)</label>
       <textarea id="notesInput" class="url-input" rows="3" placeholder="Any specific brand direction, colors, mood..."></textarea>
+    </div>
+    <div class="input-group">
+      <label class="input-label">Language</label>
+      <div class="lang-toggle">
+        <button type="button" class="lang-btn active" data-value="en">English</button>
+        <button type="button" class="lang-btn" data-value="ar">Arabic</button>
+        <button type="button" class="lang-btn" data-value="both">Both</button>
+      </div>
     </div>
     <button id="startBtn" class="start-btn">Build Cinematic Site</button>
   </div>

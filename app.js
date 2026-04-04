@@ -219,6 +219,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
   }
 
   const notes = document.getElementById('notesInput').value.trim();
+  const lang = document.querySelector('.lang-btn.active')?.dataset.value || 'en';
 
   document.getElementById('startBtn').disabled = true;
   document.getElementById('startBtn').textContent = 'Building...';
@@ -231,7 +232,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     const resp = await fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url: document.getElementById('urlInput').value.trim(), notes })
+      body: JSON.stringify({ url: document.getElementById('urlInput').value.trim(), notes, lang })
     });
     if (!resp.ok) throw new Error(`Server error ${resp.status}`);
     const data = await resp.json();
@@ -273,6 +274,14 @@ document.getElementById('openPreviewBtn').addEventListener('click', () => {
   const win = window.open('', '_blank');
   win.document.write(generatedHtml);
   win.document.close();
+});
+
+// Language toggle
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
 });
 
 // Enter key
